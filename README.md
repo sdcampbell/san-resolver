@@ -33,10 +33,33 @@ chmod +x san-resolver
 
 ## Usage
 
-Note: You MUST use the `-nc` flag with tlsx to remove color codes because it breaks san-resolver.
+Note: If you pipe input from other commands/tools such as Project Discovery tlsx, you must use the `-nc` option to remove colors from the input.
 
+Cli arguments:
+
+```bash
+san-resolver --help
+Usage of go/bin/san-resolver:
+  -buffer int
+    	Input buffer size (default 1000)
+  -force-cloudflare
+    	Force Cloudflare DNS (1.1.1.1) only
+  -force-google
+    	Force Google DNS (8.8.8.8) only
+  -no-system-dns
+    	Skip system DNS resolver
+  -timeout duration
+    	DNS lookup timeout (default 5s)
+  -v	Verbose output (show which DNS strategy worked)
+  -workers int
+    	Number of concurrent DNS workers (default 50
 ```
-$ wget -q -O - https://raw.githubusercontent.com/arkadiyt/bounty-targets-data/refs/heads/main/data/bugcrowd_data.json | jq '.[].targets.in_scope[] | select(.type == "network") | .target' | grep -E '([0-9]{1,3}\.){3}[0-9]{1,3}' | sed 's/"//g' | tlsx -san -silent -nc | ./san-resolver
+
+san-resolver is designed to accept input only from stdin (piped). The input can be IP addresses or CIDR network addresses. 
+
+Example:
+```
+$ cat ips.txt | tlsx -san -silent -nc | ./san-resolver
 203.13.127.195:443 [www.optus.com.au] CDN_MISMATCH_AKAMAI 23.212.249.212[a23-212-249-212.deploy.static.akamaitechnologies.com],23.212.249.206[a23-212-249-206.deploy.static.akamaitechnologies.com]
 203.13.127.252:443 [www.gomo.com.au] CDN_MISMATCH_AKAMAI 2600:1408:c400:4d::1749:cf45[g2600-1408-c400-004d-0000-0000-1749-cf45.deploy.static.akamaitechnologies.com],2600:1408:c400:4d::1749:cf49[g2600-1408-c400-004d-0000-0000-1749-cf49.deploy.static.akamaitechnologies.com],23.212.249.212[a23-212-249-212.deploy.static.akamaitechnologies.com]
 203.13.127.195:443 [optus.com.au] CDN_MISMATCH_AKAMAI 23.48.247.241[a23-48-247-241.deploy.static.akamaitechnologies.com],23.48.247.242[a23-48-247-242.deploy.static.akamaitechnologies.com]
