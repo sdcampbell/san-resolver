@@ -1,3 +1,3 @@
-module github.com/lpha3ch0/san-resolver
+module github.com/sdcampbell/san-resolver
 
 go 1.16
