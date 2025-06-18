@@ -57,7 +57,8 @@ Usage of go/bin/san-resolver:
 
 san-resolver is designed to accept input only from stdin (piped). The input can be IP addresses or CIDR network addresses. 
 
-Example:
+This example shows uncovering web applications that would not have been apparent if you had scanned the IP or network address due to the way load balancers and proxies work. In the example, san-resolver identifies unprotected CDN origin servers. Now you can add these to your hosts file and bypass the CDN WAF.
+
 ```
 $ cat ips.txt | tlsx -san -silent -nc | ./san-resolver
 203.13.127.195:443 [www.optus.com.au] CDN_MISMATCH_AKAMAI 23.212.249.212[a23-212-249-212.deploy.static.akamaitechnologies.com],23.212.249.206[a23-212-249-206.deploy.static.akamaitechnologies.com]
