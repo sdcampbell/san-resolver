@@ -9,6 +9,9 @@ Takes input from tlsx output and checks if certificate SAN resolves to the IP ad
 ### Build Commands
 
 ```bash
+# Install from GitHub URL
+go install github.com/lpha3ch0/san-resolver@latest
+
 # Standard compilation
 go build -o san-resolver san-resolver.go
 
