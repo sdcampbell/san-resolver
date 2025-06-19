@@ -18,26 +18,11 @@ This information may allow you to bypass the CDN WAF and test the origin server 
 ### Prerequisites
 - Go 1.16 or later installed
 
-### Build Commands
+### Installation
 
 ```bash
 # Install from GitHub URL
 go install github.com/sdcampbell/san-resolver@latest
-
-# Standard compilation
-go build -o san-resolver san-resolver.go
-
-# Optimized build (smaller binary, faster execution)
-go build -ldflags="-w -s" -o san-resolver san-resolver.go
-
-# Cross-compilation for different architectures
-GOOS=linux GOARCH=amd64 go build -o san-resolver-amd64 san-resolver.go
-GOOS=linux GOARCH=arm64 go build -o san-resolver-arm64 san-resolver.go
-```
-
-### Make Executable
-```bash
-chmod +x san-resolver
 ```
 
 ## Usage
