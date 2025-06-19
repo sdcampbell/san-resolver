@@ -1,5 +1,5 @@
 # san-resolver
-san-resolver accepts input from tlsx output and checks if the certificate Subject Alternative Name (SAN) resolves to the input IP address. If it doesn't resolve to that IP address, print the input line.
+san-resolver accepts input from [tlsx](https://github.com/projectdiscovery/tlsx) output and checks if the certificate Subject Alternative Name (SAN) resolves to the input IP address. If it doesn't resolve to that IP address, print the input line.
 
 This tool is published for use in authorized penetration testing only.
 
@@ -27,7 +27,7 @@ go install github.com/sdcampbell/san-resolver@latest
 
 ## Usage
 
-Note: san-resolver is designed to accept input only from piped tlsx uncolored (`-nc`) input. Normally you don't need to specify any of the following CLI arguments:
+Note: san-resolver is designed to accept input only from piped [tlsx](https://github.com/projectdiscovery/tlsx) uncolored (`-nc`) input. Normally you don't need to specify any of the following CLI arguments:
 
 ```bash
 san-resolver --help
