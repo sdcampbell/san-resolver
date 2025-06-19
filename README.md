@@ -1,5 +1,5 @@
 # san-resolver
-Takes input from tlsx output and checks if certificate SAN resolves to the IP address. If it doesn't resolve to the IP address, print the input line.
+san-resolver accepts input from tlsx output and checks if certificate SAN resolves to the IP address. If it doesn't resolve to the IP address, print the input line.
 
 This tool is published for use in authorized penetration testing only.
 
@@ -42,13 +42,11 @@ chmod +x san-resolver
 
 ## Usage
 
-Note: If you pipe input from other commands/tools such as Project Discovery tlsx, you must use the `-nc` option to remove colors from the input.
-
-Cli arguments:
+Note: san-resolver is designed to accept input only from piped tlsx uncolored (`-nc`) input. Normally you don't need to specify any of the following CLI arguments:
 
 ```bash
 san-resolver --help
-Usage of go/bin/san-resolver:
+Usage of san-resolver:
   -buffer int
     	Input buffer size (default 1000)
   -force-cloudflare
@@ -64,12 +62,12 @@ Usage of go/bin/san-resolver:
     	Number of concurrent DNS workers (default 50
 ```
 
-san-resolver is designed to accept input only from stdin (piped). The input can be IP addresses or CIDR network addresses. 
-
 This example shows uncovering web applications that would not have been apparent if you had scanned the IP or network address due to the way load balancers and proxies work. In the example, san-resolver identifies unprotected CDN origin servers. Now you can add these to your hosts file and bypass the CDN WAF.
 
+These IP addresses were in scope on Bugcrowd at the time this scan was run.
+
 ```
-$ cat ips.txt | tlsx -san -silent -nc | ./san-resolver
+$ cat ips.txt | tlsx -san -silent -nc | san-resolver
 203.13.127.195:443 [www.optus.com.au] CDN_MISMATCH_AKAMAI 23.212.249.212[a23-212-249-212.deploy.static.akamaitechnologies.com],23.212.249.206[a23-212-249-206.deploy.static.akamaitechnologies.com]
 203.13.127.252:443 [www.gomo.com.au] CDN_MISMATCH_AKAMAI 2600:1408:c400:4d::1749:cf45[g2600-1408-c400-004d-0000-0000-1749-cf45.deploy.static.akamaitechnologies.com],2600:1408:c400:4d::1749:cf49[g2600-1408-c400-004d-0000-0000-1749-cf49.deploy.static.akamaitechnologies.com],23.212.249.212[a23-212-249-212.deploy.static.akamaitechnologies.com]
 203.13.127.195:443 [optus.com.au] CDN_MISMATCH_AKAMAI 23.48.247.241[a23-48-247-241.deploy.static.akamaitechnologies.com],23.48.247.242[a23-48-247-242.deploy.static.akamaitechnologies.com]
