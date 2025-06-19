@@ -1,5 +1,5 @@
 # san-resolver
-san-resolver accepts input from tlsx output and checks if certificate SAN resolves to the IP address. If it doesn't resolve to the IP address, print the input line.
+san-resolver accepts input from tlsx output and checks if the certificate Subject Alternative Name (SAN) resolves to the input IP address. If it doesn't resolve to that IP address, print the input line.
 
 This tool is published for use in authorized penetration testing only.
 
