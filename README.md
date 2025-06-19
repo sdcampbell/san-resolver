@@ -1,6 +1,18 @@
 # san-resolver
 Takes input from tlsx output and checks if certificate SAN resolves to the IP address. If it doesn't resolve to the IP address, print the input line.
 
+This tool is published for use in authorized penetration testing only.
+
+A “vhost,” short for “virtual host,” is a configuration used in web servers to host multiple websites (domains) on a single server or IP address. It allows a server to serve different content based on the request’s hostname, effectively enabling multiple domains to share the same server resources. When you request a web application by IP address in your browser or other tool, the server responds with the default web application. There may be additional web applications to discover when presented with the correct `Host` header. This is a problem for penetration testers and bug bounty hunters when given a scope of IP or network addresses. 
+
+The output of this tool may signify one of the following:
+
+1. `CDN_MISMATCH_*`: The vhost resolves to a known CDN provider IP address and you've found an unprotected CDN origin server.
+2. `DNS_FAILURE`: The vhost does not resolve to any IP address. The organization may be resolving the hostname only on internal DNS servers, or the application may no longer be in service and the owner forgot to remove it from the Internet, or other reasons.
+3. `IP_MISMATCH`: The vhost resolves to a different IP address. This may be a development or staging server and could have less protection than the production server.
+
+This information may allow you to bypass the CDN WAF and test the origin server directly by adding an entry to your `/etc/hosts` file, or specifying a HOST header with various security testing tools. This methodology has enabled the author to detect unprotected CDN origin servers and old, forgotten applications during external penetration tests.
+
 ## Compilation
 
 ### Prerequisites
@@ -10,16 +22,13 @@ Takes input from tlsx output and checks if certificate SAN resolves to the IP ad
 
 ```bash
 # Install from GitHub URL
-go install github.com/sdcampbell/san-resolver@main
+go install github.com/sdcampbell/san-resolver@latest
 
 # Standard compilation
 go build -o san-resolver san-resolver.go
 
 # Optimized build (smaller binary, faster execution)
 go build -ldflags="-w -s" -o san-resolver san-resolver.go
-
-# Static binary (no external dependencies)
-CGO_ENABLED=0 GOOS=linux go build -a -ldflags="-w -s -extldflags '-static'" -o san-resolver san-resolver.go
 
 # Cross-compilation for different architectures
 GOOS=linux GOARCH=amd64 go build -o san-resolver-amd64 san-resolver.go
