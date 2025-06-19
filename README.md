@@ -73,7 +73,7 @@ $ cat ips.txt | tlsx -san -silent -nc | san-resolver
 203.13.128.211:443 [www.adfs.optus.com.au] DNS_FAILURE
 ```
 
-### Performance Tuning
+## Performance Tuning
 
 The program includes several configurable constants for performance optimization:
 
@@ -85,16 +85,19 @@ DNSTimeout = 5 * time.Second  // DNS lookup timeout (adjust for network conditio
 
 To modify these values, edit the constants in `san-resolver.go` and recompile.
 
-### Output Behavior
+## Output Behavior
 
 - **Silent Success**: Lines where DNS resolution matches the expected IP are not printed
 - **Mismatch Detection**: Lines where DNS doesn't resolve to the expected IP are printed
 - **Error Handling**: Malformed input or DNS resolution failures result in the line being printed
 
-### Troubleshooting
+## Troubleshooting
 
 - **High Memory Usage**: Reduce `NumWorkers` and `InputBufferSize` constants
 - **Slow Performance**: Increase `NumWorkers` or decrease `DNSTimeout`
 - **DNS Timeouts**: Increase `DNSTimeout` for slow networks
 - **Large Input Files**: Use streaming with `cat large_file.txt | ./san-resolver`
 
+## ToDo:
+
+- [ ] Ensure domains have proper TLD's before attempting to resolve. Sometimes self-signed certs have missing or invalid TLD's.
